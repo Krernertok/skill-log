@@ -20,11 +20,15 @@ Further instructions on usage can be found below in the **Usage** section.
 1. Clone this repository
 2. Make sure the sl file is an executable, for example:
 
+    ```
     chmod u+x sl
+    ```
 
 3. Create a symbolic link to the executable inside a directory in your PATH, for example:
 
+    ```
     sudo ln -s "$(pwd)/sl" /usr/local/bin/sl
+    ```
 
 
 ## Usage
