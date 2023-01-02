@@ -93,7 +93,6 @@ main() {
             exit
             ;;
       h|*)  usage
-            exit
             ;;
     esac
   done
