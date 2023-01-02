@@ -30,7 +30,7 @@ usage() {
 
 prompt_cancel_input() {
   echo "Confirm logging new skill: '""$1""' (y/n)"
-  read -n1 input
+  read -r -n1 input
   # print newline after input
   echo
 
