@@ -6,12 +6,12 @@ LOGFILE="$HOME/.skill-log/skill-log"
 
 error() {
   if (( $? != 0 )); then
-    echo "error: $@" >&2
+    echo "error: $*" >&2
     exit 1
   fi
 }
 
-mkdir -p $(dirname "${LOGFILE}") 2> /dev/null
+mkdir -p "$(dirname "${LOGFILE}")" 2> /dev/null
 error "could not access logfile directory ($(dirname LOGFILE))"
 
 touch -a "${LOGFILE}" 2> /dev/null
@@ -24,13 +24,11 @@ usage() {
   echo >&2 " -h     display this help and exit"
   echo >&2 " -l     list all logged skills"
   echo >&2 " -r     print report"
-
-  exit 0
 }
 
-cancel_input?() {
-  echo "Confirm logging new skill: '"$1"' (y/n)"
-  read -n1 input
+prompt_cancel_input() {
+  echo "Confirm logging new skill: '""$1""' (y/n)"
+  read -r -n1 input
   # print newline after input
   echo
 
@@ -42,7 +40,7 @@ cancel_input?() {
 
 log_skill() {
   # prompt confirmation to log a new skill in case of typo
-  ! grep -q "$1" "${LOGFILE}" && cancel_input? "$1" && exit
+  ! grep -q "$1" "${LOGFILE}" && prompt_cancel_input "$1" && exit
 
   log_string="$1 $(date +%Y-%m-%d)"
   # duplicate skills on same day are NOT logged
@@ -59,7 +57,7 @@ log_skill() {
 list() {
   awk -e '{ skills[$1] += 1 }' \
       -e 'END { for (skill in skills) { print skill ": " skills[skill] } }' \
-      ${LOGFILE}
+      "${LOGFILE}"
 }
 
 report() {
@@ -77,7 +75,7 @@ report() {
       -e '$2 ~ TIMEPERIOD { if((SKILL!="") && (SKILL==$1)){ skills[$1] += 1 } }' \
       -e '$2 ~ TIMEPERIOD { if(SKILL==""){ skills[$1] += 1 } }' \
       -e 'END { for (skill in skills) { print skill ": " skills[skill] } }' \
-      ${LOGFILE}
+      "${LOGFILE}"
 }
 
 main() {
