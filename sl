@@ -24,8 +24,6 @@ usage() {
   echo >&2 " -h     display this help and exit"
   echo >&2 " -l     list all logged skills"
   echo >&2 " -r     print report"
-
-  exit 0
 }
 
 prompt_cancel_input() {
@@ -93,6 +91,7 @@ main() {
             exit
             ;;
       h|*)  usage
+            exit
             ;;
     esac
   done
