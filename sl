@@ -6,7 +6,7 @@ LOGFILE="$HOME/.skill-log/skill-log"
 
 error() {
   if (( $? != 0 )); then
-    echo "error: $@" >&2
+    echo "error: $*" >&2
     exit 1
   fi
 }
