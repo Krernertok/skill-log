@@ -11,7 +11,7 @@ error() {
   fi
 }
 
-mkdir -p $(dirname "${LOGFILE}") 2> /dev/null
+mkdir -p "$(dirname "${LOGFILE}")" 2> /dev/null
 error "could not access logfile directory ($(dirname LOGFILE))"
 
 touch -a "${LOGFILE}" 2> /dev/null
@@ -29,7 +29,7 @@ usage() {
 }
 
 cancel_input?() {
-  echo "Confirm logging new skill: '"$1"' (y/n)"
+  echo "Confirm logging new skill: '""$1""' (y/n)"
   read -n1 input
   # print newline after input
   echo
@@ -59,7 +59,7 @@ log_skill() {
 list() {
   awk -e '{ skills[$1] += 1 }' \
       -e 'END { for (skill in skills) { print skill ": " skills[skill] } }' \
-      ${LOGFILE}
+      "${LOGFILE}"
 }
 
 report() {
@@ -77,7 +77,7 @@ report() {
       -e '$2 ~ TIMEPERIOD { if((SKILL!="") && (SKILL==$1)){ skills[$1] += 1 } }' \
       -e '$2 ~ TIMEPERIOD { if(SKILL==""){ skills[$1] += 1 } }' \
       -e 'END { for (skill in skills) { print skill ": " skills[skill] } }' \
-      ${LOGFILE}
+      "${LOGFILE}"
 }
 
 main() {
