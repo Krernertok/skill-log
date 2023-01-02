@@ -28,7 +28,7 @@ usage() {
   exit 0
 }
 
-cancel_input?() {
+prompt_cancel_input() {
   echo "Confirm logging new skill: '""$1""' (y/n)"
   read -n1 input
   # print newline after input
@@ -42,7 +42,7 @@ cancel_input?() {
 
 log_skill() {
   # prompt confirmation to log a new skill in case of typo
-  ! grep -q "$1" "${LOGFILE}" && cancel_input? "$1" && exit
+  ! grep -q "$1" "${LOGFILE}" && prompt_cancel_input "$1" && exit
 
   log_string="$1 $(date +%Y-%m-%d)"
   # duplicate skills on same day are NOT logged
